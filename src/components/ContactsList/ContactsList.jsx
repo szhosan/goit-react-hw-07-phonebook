@@ -1,31 +1,39 @@
 import React from 'react';
 import s from './ContactsList.module.css';
-import { useFetchContacts } from 'redux/contacts/contactsSlice';
+import { useDeleteContactMutation } from 'redux/contacts/contactsSlice';
+/* import PropTypes from 'prop-types'; */
 
-const ContactsList = () => {
-  const { data } = useFetchContacts();
-  console.log(data);
-  const contacts = null;
-
+const ContactsList = ({ contacts }) => {
+  const [deleteContact] = useDeleteContactMutation();
   return (
     <>
-      <ul className={s.list}>
-        {contacts.map(({ id, name, number }) => (
-          <li key={id}>
-            <div className={s.listItemContainer}>
-              {name}: {number}
-              <button
-                className={s.button}
-                /* onClick={() => } */
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {contacts && (
+        <ul className={s.list}>
+          {contacts.map(({ id, name, number }) => (
+            <li key={id}>
+              <div className={s.listItemContainer}>
+                <div className={s.nameContainer}>{name}:</div>
+                <div className={s.numberContainer}>{number}</div>
+                <button className={s.button} onClick={deleteContact(id)}>
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 };
+
+/* ContactsList.propTypes = {
+  contacts: PropTypes.array(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+}; */
 
 export default ContactsList;

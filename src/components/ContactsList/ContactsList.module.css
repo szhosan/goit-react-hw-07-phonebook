@@ -1,7 +1,11 @@
 .list {
-  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
   padding: 10px;
-  margin: 0;
+  padding-left: 30px;
+
+  outline: 1px solid black;
 }
 
 .listItemContainer {
@@ -12,4 +16,12 @@
 
 .button {
   cursor: pointer;
+}
+
+.nameContainer {
+  width: 250px;
+}
+
+.numberContainer {
+  width: 250px;
 }
