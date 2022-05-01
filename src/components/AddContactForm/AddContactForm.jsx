@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import s from './AddContactForm.module.css';
 import { useCreateContactMutation } from 'redux/contacts/contactsSlice';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import PropTypes from 'prop-types';
 
 function AddContactForm({ contacts }) {
   const [contact, setContact] = useState({ name: '', number: '' });
-  const [createContact, { isSuccess }] = useCreateContactMutation();
+  const [createContact, { isLoading }] = useCreateContactMutation();
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -26,11 +28,13 @@ function AddContactForm({ contacts }) {
   const HandleSubmit = e => {
     e.preventDefault();
     if (nameAlreadyExist(contacts, contact.name)) {
-      alert(`Name ${contact.name} is present in your phone book`);
+      Notify.warning(`Name ${contact.name} is present in your phone book`);
       return;
     }
     createContact(contact).then(
-      alert(`Name ${contact.name} successfully added to your phone book`)
+      Notify.success(
+        `Name ${contact.name} successfully added to your phone book`
+      )
     );
 
     reset();
@@ -68,11 +72,21 @@ function AddContactForm({ contacts }) {
           />
         </label>
       </div>
-      <button className={s.button} type="submit">
+      <button disabled={isLoading} className={s.button} type="submit">
         Add contact
       </button>
     </form>
   );
 }
+
+AddContactForm.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default AddContactForm;

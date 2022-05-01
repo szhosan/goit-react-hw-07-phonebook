@@ -7,21 +7,3 @@
 
   outline: 1px solid black;
 }
-
-.listItemContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.button {
-  cursor: pointer;
-}
-
-.nameContainer {
-  width: 250px;
-}
-
-.numberContainer {
-  width: 250px;
-}
